@@ -32,7 +32,7 @@ public class EnemyCollider : MonoBehaviour
 
                 child_rb.angularVelocity = new Vector3(x, y, z);
                 
-                child_rb.velocity = new Vector3(x, Math.Abs(y), z);
+                child_rb.velocity = new Vector3(x, 10, z);
 
                 child_Collider.enabled = true;
             }
