@@ -12,14 +12,30 @@ public class Shooting : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
+    void OnEnable() {
+        StartCoroutine(ShootCoroutine());
+    }
+
+    System.Collections.IEnumerator ShootCoroutine()
+    {
+        while (true) {
+            Shoot();
+            yield return new WaitForSeconds(1.0f / (float) fireRate);
+        }
+
+        yield return null;
+    }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
+
+    }
+
+    void Shoot() {
+        if (Input.GetButton("Fire1")) {
             GameObject bullet = GameObject.Instantiate<GameObject>(bulletPrefab);
             bullet.transform.position = spawnPoint.position;
             bullet.transform.rotation = this.transform.rotation;
