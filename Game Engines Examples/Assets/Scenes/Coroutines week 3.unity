@@ -489,8 +489,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf3165fbebcee034ebaff0455426f41c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 10
+  radius: 20
   spawnRate: 1
+  max: 5
+  spawnObject: {fileID: 4370002598863332856, guid: 8199e9d2d628f9343994e2314c7af85c,
+    type: 3}
 --- !u!4 &1225839543
 Transform:
   m_ObjectHideFlags: 0
@@ -521,7 +524,7 @@ GameObject:
   - component: {fileID: 1310583481}
   m_Layer: 0
   m_Name: player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -634,7 +637,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 1081215067}
   bulletPrefab: {fileID: 1850118630018322559, guid: c060ee05cdf4e1b408c057f1877b2636,
     type: 3}
-  fireRate: 1
+  fireRate: 5
 --- !u!1 &1410947404
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,7 +808,7 @@ GameObject:
   - component: {fileID: 2115653622}
   m_Layer: 0
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
