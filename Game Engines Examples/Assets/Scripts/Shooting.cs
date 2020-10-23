@@ -7,6 +7,8 @@ public class Shooting : MonoBehaviour
     public Transform spawnPoint;
     public GameObject bulletPrefab; 
 
+    Coroutine shootingCo;
+
     public float fireRate = 3;
 
     // Start is called before the first frame update
@@ -24,7 +26,12 @@ public class Shooting : MonoBehaviour
 
     void OnEnable()
     {
-        StartCoroutine(ShootingCoroutine());
+        shootingCo = StartCoroutine(ShootingCoroutine());
+    }
+
+    void OnDisable()
+    {
+        StopCoroutine(shootingCo);
     }
 
     bool shooting = false;

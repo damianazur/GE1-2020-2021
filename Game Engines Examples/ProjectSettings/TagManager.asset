@@ -6,8 +6,14 @@ TagManager:
   tags:
   - Ground
   - Cube
+<<<<<<< Updated upstream
   - BlueTank
   - PlayerBullet
+=======
+  - Enemy
+  - bullet
+  - Seat
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
