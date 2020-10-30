@@ -8,6 +8,7 @@ TagManager:
   - Cube
   - Enemy
   - bullet
+  - enemyBullet
   layers:
   - Default
   - TransparentFX
