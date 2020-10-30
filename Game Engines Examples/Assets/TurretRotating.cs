@@ -11,6 +11,7 @@ public class TurretRotating : MonoBehaviour
     public float time = 5.0f;
     public float speed = 20.0f;
     bool playerWithinSight = false;
+    bool playerWithinRange = false;
     public GameObject bulletPrefab; 
     public Transform spawnPoint; 
     public Transform target;
@@ -33,7 +34,7 @@ public class TurretRotating : MonoBehaviour
     {
         while(true)
         {
-            if (playerWithinSight == true)
+            if (playerWithinSight == true && playerWithinRange == true)
             {
                 Shoot();
                 yield return new WaitForSeconds(1.0f / fireRate);
@@ -46,22 +47,24 @@ public class TurretRotating : MonoBehaviour
         StartCoroutine(ShootingCoroutine());
     }
 
-    void OnTriggerEnter(Collider c)
-    {
-        Debug.Log("Triggered with: " + c.gameObject.tag);
-    }
-
     void OnTriggerStay(Collider c)
     {
-        Vector3 toTarget = target.transform.position - transform.position;
-        toTarget.Normalize();
-        end = Quaternion.LookRotation(toTarget);
+        if (c.CompareTag("Player")) {
+            playerWithinRange = true;
+            
+            Vector3 toTarget = c.transform.position - transform.position;
+            toTarget.Normalize();
+            end = Quaternion.LookRotation(toTarget);
 
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, end, speed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, end, speed * Time.deltaTime);
+        }
     }
 
-    void Update()
-    {
+    void OnTriggerExit(Collider c) {
+        playerWithinRange = false;
+    }
+
+    void Update() {
         Vector3 toTarget = target.transform.position - transform.position;
         toTarget.Normalize();
 
