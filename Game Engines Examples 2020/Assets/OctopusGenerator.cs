@@ -24,7 +24,7 @@ public class OctopusGenerator : MonoBehaviour {
                 , pos
                 , Quaternion.AngleAxis(theta * i * Mathf.Rad2Deg, Vector3.up)
                 );
-            //t.transform.GetChild(0).GetComponent<HeadRotator>().theta = Random.Range(0, Mathf.PI * 2.0f);
+
             t.transform.parent = this.transform;
         }
     }

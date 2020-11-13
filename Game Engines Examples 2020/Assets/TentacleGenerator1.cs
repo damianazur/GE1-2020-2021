@@ -9,15 +9,19 @@ public class TentacleGenerator1 : MonoBehaviour {
 
 
     // Use this for initialization
+    // Generates the tentacle segments in a straight line
     void Awake () {
         for (int i = 0; i < numSegments; i++)
         {
-            Vector3 pos = -i * Vector3.forward * 1.1f;
-            GameObject prefab = (i == 0) ? headPrefab : segmentPrefab;
-            GameObject segment = GameObject.Instantiate<GameObject>(prefab);
+            Vector3 pos = -i * Vector3.forward * 1.1f; // Head created first and then everything else behind
+            GameObject prefab = (i == 0) ? headPrefab : segmentPrefab; // if first segment then it is the head, otherwise it is a body
+            GameObject segment = GameObject.Instantiate<GameObject>(prefab); // Instantiate the segment
 
+            // Rotate the position by the transforms rotation and add the position
+            // Doing TransformPoint without including scale
+            // The position of the segment is local to this object
             segment.transform.position = (transform.rotation * pos) + transform.position;
-            //segment.transform.position = // transform.TransformPoint(pos);
+            
             segment.transform.rotation = transform.rotation;
             segment.transform.parent = this.transform;
             segment.GetComponent<Renderer>().material.color =
