@@ -14,7 +14,31 @@ public class PhysicsFactory : MonoBehaviour {
         // Dont forget to rotate each brick. You can use a quaternion for this
         // For each row, you will need to offeet the rotation of each brick by half
         // So that the bricks overlap
-        // Assign random colors to each brick                
+        // Assign random colors to each brick           
+        
+        for(int h = 0; h <= height ; h ++)
+        {
+            float theta = Mathf.PI * 2.0f / ((float)segments);
+            for (int j = 0 ; j < segments ; j ++)
+            {
+                float angle  = (j * theta);
+                if (h % 2 == 0) {
+                    angle = angle + theta/2;
+                } 
+                float x = (Mathf.Sin(angle) * radius) + point.x;
+                float z = (Mathf.Cos(angle) * radius) + point.z;
+                GameObject brick = CreateBrick(x, h, z, 1, 1, 1);
+
+                Vector3 target = new Vector3(point.x,h,point.z);
+                Vector3 relativePos = target - brick.transform.position;
+                Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.right);
+                brick.transform.rotation = rotation;
+
+                brick.GetComponent<Renderer>().material.color =
+                    Color.HSVToRGB(Random.Range(0.0f, 1.0f), 1, 1);
+                brick.transform.parent = this.transform;
+            }
+        }
     }
 
     void CreateWorm(Vector3 point, Quaternion q)
@@ -55,14 +79,25 @@ public class PhysicsFactory : MonoBehaviour {
 
 
         GameObject chassis = CreateBrick(x, y, z, width, height, length);
+        // Rigidbody rb = chassis.AddComponent<Rigidbody>();
         Quaternion q = Quaternion.AngleAxis(90.0f, Vector3.right);
 
         Vector3[] wheelPositions = new Vector3[4];
         // Assign values to the 4 wheel positions
         // Calculate the wheel positions offset from the center of the chassis.
+        wheelPositions[0] = (new Vector3(x - width/2 + wheelOffset, y, z - length/2 - wheelOffset));
+        wheelPositions[1] = (new Vector3(x + width/2 - wheelOffset, y, z + length/2 + wheelOffset));
+        wheelPositions[2] = (new Vector3(x - width/2 + wheelOffset, y, z + length/2 + wheelOffset));
+        wheelPositions[3] = (new Vector3(x + width/2 - wheelOffset, y, z - length/2 - wheelOffset));
         
         foreach (Vector3 wheelPosition in wheelPositions)
         {
+            GameObject wheel = CreateCylinder(wheelPosition.x, wheelPosition.y, wheelPosition.z, wheelDiameter, wheelWidth, q);
+            HingeJoint hingeJoint = wheel.AddComponent<HingeJoint>();
+            hingeJoint.connectedBody = chassis.GetComponent<Rigidbody>();
+            // hingeJoint.anchor = chassis;
+            hingeJoint.axis = Vector3.up;
+            
             // Call CreateCylinder to create each of the wheels at the appropriate positions            
             // Use the values in the array and the Quaternion q to rotate the wheels            
             // Add a Hingejoint to each of the wheels and connect it to the chassis
