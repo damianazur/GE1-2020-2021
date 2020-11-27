@@ -36,7 +36,7 @@ public class AudioAnalyzer : MonoBehaviour {
      * 2Khz - 4Khz - Upper midrange
      * 4Khz - 6Khz - Presence
      * 6Khz - 20Khz - Brilliance
-     */
+    */
 
     private void Awake()
     {
@@ -47,6 +47,7 @@ public class AudioAnalyzer : MonoBehaviour {
         
         if (useMic)
         {
+            Debug.Log("Microphone is used");
             if (Microphone.devices.Length > 0)
             {
                 selectedDevice = Microphone.devices[0].ToString();
@@ -125,7 +126,7 @@ public class AudioAnalyzer : MonoBehaviour {
             }
             average /= (float) width;
             bands[i] = average;
-            Debug.Log(i + "\t" + start + "\t" + end + "\t" + start * binWidth + "\t" + (end * binWidth));
+            // Debug.Log(i + "\t" + start + "\t" + end + "\t" + start * binWidth + "\t" + (end * binWidth));
         }
 
     }
@@ -135,7 +136,16 @@ public class AudioAnalyzer : MonoBehaviour {
         // Calculate the average amplitude of the frame of audio
         // From the wave array
         // And calculate the lerpedAmplitude
-        // By lerping to it 
+        // By lerping to it
+        float sum = 0;
+        for (int i = 0; i < wave.Length; i++) {
+            // print(wave[i]);
+            sum = sum + Mathf.Abs(wave[i]);
+        }
+
+        float avg = sum / (float) wave.Length;
+        amplitude = avg;
+        // print(avg);
     }
     
     
